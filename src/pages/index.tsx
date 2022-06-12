@@ -1,9 +1,16 @@
-import type { NextPage } from 'next'
-
-const Home: NextPage = () => {
+export default function Home(props) {
   return (
-    <h1>Index</h1>
+    <div>{JSON.stringify(props.episodes)}</div>
   )
 }
 
-export default Home
+export async function getStaticProps() {
+  const response = await fetch('http://localhost:3333/episodes')
+  const data = await response.json()
+  return {
+    props: {
+      episodes: data
+    },
+    revalidate: 60 * 60 * 8 //generate new html page after 8h
+  }
+}
