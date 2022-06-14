@@ -1,11 +1,10 @@
-import { useContext } from 'react'
 import { GetStaticProps, GetStaticPaths } from 'next'
 
 import { format, parseISO } from 'date-fns'
 import ptBR from 'date-fns/locale/pt-BR'
 
 import { api } from '../../services/api'
-import { PlayerContext } from '../../contexts/PlayerContext'
+import { usePlayer } from '../../contexts/PlayerContext'
 import { convertDurationToTimeString } from '../../utils/convertDurationToTimeString'
 
 import styles from './episode.module.scss'
@@ -29,7 +28,7 @@ type EpisodeProps = {
 }
 
 export default function Episode({ episode }: EpisodeProps) {
-    const { play } = useContext(PlayerContext)
+    const { play } = usePlayer()
 
     return (
         <div className={styles.episode}>

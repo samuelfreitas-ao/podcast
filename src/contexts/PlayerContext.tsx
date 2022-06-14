@@ -1,4 +1,4 @@
-import { createContext, useState, ReactNode } from 'react'
+import { createContext, useContext, useState, ReactNode } from 'react'
 
 type Episode = {
     id: string
@@ -85,4 +85,8 @@ export const PlayercontextLayer = ({ children }: PlayercontextLayerProps) => {
             {children}
         </PlayerContext.Provider>
     )
+}
+
+export const usePlayer = () => {
+    return useContext(PlayerContext)
 }
