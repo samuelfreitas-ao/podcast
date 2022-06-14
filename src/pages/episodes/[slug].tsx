@@ -57,13 +57,25 @@ export default function Episode({ episode }: EpisodeProps) {
 }
 
 export const getStaticPaths: GetStaticPaths = async () => {
+    const { data } = await api.get(`/episodes`, {
+        params: {
+            _limit: 2,
+            _sort: 'published_at',
+            _order: 'desc',
+        }
+    })
+    //To generate static pages on build for last 2 episodes
+    const paths = data.map((episode: Episode) => ({
+        params: { slug: episode.id }
+    }))
+
     return {
-        paths: [],
+        paths,
         fallback: 'blocking'
     }
 }
 
-export const getStaticProps: GetStaticProps = async (ctx) => {
+export const getStaticProps: GetStaticProps = async (ctx: any) => {
     const { slug } = ctx.params
 
     const { data } = await api.get(`/episodes/${slug}`)
