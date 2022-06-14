@@ -15,6 +15,7 @@ import styles from './home.module.scss'
 type Episode = {
   id: string
   title: string
+  description: string
   members: string
   publishedAt: string
   thumbnail: string
