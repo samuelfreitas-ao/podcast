@@ -9,14 +9,14 @@ import styles from './styles.module.scss'
 export function Player() {
     const audioRef = useRef<HTMLAudioElement>(null)
 
-    const { episodeList, currentEpisodeIndex, isPlaying, togglePlay } = useContext(PlayerContext)
+    const { episodeList, currentEpisodeIndex, isPlaying, togglePlay, setPlayingState } = useContext(PlayerContext)
     const episode = episodeList[currentEpisodeIndex]
 
     useEffect(() => {
-        if(!audioRef.current) return
-        if(isPlaying){
+        if (!audioRef.current) return
+        if (isPlaying) {
             audioRef.current.play()
-        }else{
+        } else {
             audioRef.current.pause()
         }
     }, [isPlaying])
@@ -62,7 +62,13 @@ export function Player() {
                     </div>
                     <span>00:00</span>
                 </div>
-                {episode && <audio src={episode.url} autoPlay ref={audioRef} />}
+                {episode &&
+                    <audio
+                        src={episode.url} autoPlay ref={audioRef}
+                        onPlay={() => setPlayingState(true)}
+                        onPause={() => setPlayingState(false)}
+                    />
+                }
                 <div className={styles.buttons}>
                     <button type="button" disabled={!episode}>
                         <img src="/shuffle.svg" alt="Embaralhar" />
