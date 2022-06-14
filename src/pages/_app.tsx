@@ -8,17 +8,35 @@ import { PlayerContext } from '../contexts/PlayerContext'
 import '../styles/globals.scss'
 import styles from '../styles/app.module.scss'
 
+
+type Episode = {
+  id: string
+  title: string
+  members: string
+  publishedAt: string
+  thumbnail: string
+  duration: number
+  durationString: string
+  url: string
+}
+
 function MyApp({ Component, pageProps }: AppProps) {
   const [episodeList, setEpisodeList] = useState([])
   const [currentEpisodeIndex, setCurrentEpisodeIndex] = useState(0)
+  const [isPlaying, setIsPlaying] = useState(false)
 
-  function play(episode) {
+  function play(episode: any) {
     setEpisodeList([episode])
     setCurrentEpisodeIndex(0)
+    setIsPlaying(true)
+  }
+
+  function togglePlay() {
+    setIsPlaying(!isPlaying)
   }
 
   return (
-    <PlayerContext.Provider value={{ episodeList, currentEpisodeIndex, play }}>
+    <PlayerContext.Provider value={{ episodeList, currentEpisodeIndex, play, isPlaying, togglePlay }}>
       <div className={styles.wrapper}>
         <main>
           <Header />
