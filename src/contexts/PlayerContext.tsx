@@ -22,6 +22,8 @@ type EpisodeParams = {
     playPrevious: () => void
     togglePlay: () => void
     setPlayingState: (state: boolean) => void
+    hasNext: boolean
+    hasPrevious: boolean
 }
 
 export const PlayerContext = createContext({} as EpisodeParams)
@@ -55,13 +57,15 @@ export const PlayercontextLayer = ({ children }: PlayercontextLayerProps) => {
         setIsPlaying(state)
     }
 
+    const hasNext = (currentEpisodeIndex + 1) < episodeList.length
+    const hasPrevious = currentEpisodeIndex > 0
+
     function playNext() {
-        const nextEpisodeIndex = currentEpisodeIndex + 1
-        if (nextEpisodeIndex < episodeList.length) setCurrentEpisodeIndex(nextEpisodeIndex)
+        if (hasNext) setCurrentEpisodeIndex(currentEpisodeIndex + 1)
     }
 
     function playPrevious() {
-        if (currentEpisodeIndex > 0) setCurrentEpisodeIndex(currentEpisodeIndex - 1)
+        if (hasPrevious) setCurrentEpisodeIndex(currentEpisodeIndex - 1)
     }
 
     return (
@@ -74,7 +78,9 @@ export const PlayercontextLayer = ({ children }: PlayercontextLayerProps) => {
             playPrevious,
             isPlaying,
             togglePlay,
-            setPlayingState
+            setPlayingState,
+            hasNext,
+            hasPrevious,
         }}>
             {children}
         </PlayerContext.Provider>
