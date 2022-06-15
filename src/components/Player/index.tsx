@@ -49,10 +49,12 @@ export function Player() {
         })
     }
 
-    function handleSeek(amount: number) {
+    function handleSeek(amount: number | number[]) {
         if (!audioRef.current) return
-        audioRef.current.currentTime = amount
-        setProgress(amount)
+
+        const value = typeof amount == 'number' ? amount: amount[0]
+        audioRef.current.currentTime = value
+        setProgress(value)
     }
 
     function handleEpisodeEnded() {
