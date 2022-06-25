@@ -1,5 +1,5 @@
 import axios from "axios";
 
 export const api = axios.create({
-  baseURL: 'https://mwangosoft.ao/api/podcast'
+  baseURL: 'http://localhost:3333'
 });
